@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Азуритовая Дева</title>
+
+<style>
+
+:root{
+
+--bg:#09101c;
+--panel:#16304d;
+--panel-hover:#21456d;
+
+--gold:#f2d7a0;
+--accent:#4da6ff;
+
+--text:#eef6ff;
+
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+html,
+body{
+width:100%;
+height:100%;
+}
+
+body{
+
+overflow:hidden;
+
+background:
+radial-gradient(circle at top,
+#315f93 0%,
+#09101c 75%);
+
+color:var(--text);
+
+font-family:
+Georgia,
+serif;
+}
+
+/* ===================================== */
+/* ОСНОВНОЙ КОНТЕЙНЕР */
+/* ===================================== */
+
+.app{
+
+height:100vh;
+
+display:grid;
+
+grid-template-rows:
+auto
+auto
+1fr;
+}
+
+/* ===================================== */
+/* ЗАГОЛОВОК */
+/* ===================================== */
+
+header{
+
+text-align:center;
+
+padding:
+10px
+20px
+4px;
+}
+
+h1{
+
+color:white;
+
+font-size:3rem;
+
+font-weight:bold;
+
+text-shadow:
+0 0 25px rgba(77,166,255,.4);
+}
+
+.subtitle{
+
+margin-top:8px;
+
+font-size:1.3rem;
+
+color:#c7daee;
+}
+
+/* ===================================== */
+/* ОСНОВНАЯ СЕТКА */
+/* ===================================== */
+
+.main-layout{
+
+display:grid;
+
+height:100%;
+
+padding:14px;
+
+gap:14px;
+
+overflow:hidden;
+
+grid-template-columns:
+37%
+26%
+37%;
+}
+
+/* ===================================== */
+/* КОЛОНКИ */
+/* ===================================== */
+
+.left-column,
+.right-column{
+
+display:grid;
+
+gap:12px;
+
+min-height:0;
+}
+
+.left-column{
+
+grid-template-rows:
+1fr
+1fr;
+}
+
+.right-column{
+
+grid-template-rows:
+1fr
+1fr;
+}
+
+/* ===================================== */
+/* КАРТОЧКИ */
+/* ===================================== */
+
+.stage-card,
+.myth-section{
+
+background:
+rgba(22,48,77,.92);
+
+border-radius:20px;
+
+padding:24px;
+
+display:flex;
+
+flex-direction:column;
+
+justify-content:center;
+
+transition:.3s;
+
+cursor:pointer;
+
+overflow:hidden;
+}
+
+.stage-card:hover,
+.myth-section:hover{
+
+background:
+rgba(33,69,109,.95);
+
+transform:
+translateY(-2px);
+}
+
+.active-card{
+
+box-shadow:
+0 0 30px rgba(77,166,255,.30);
+
+border-left:
+6px solid var(--gold);
+}
+
+.stage-title{
+
+font-size:1.35rem;
+
+color:var(--gold);
+
+line-height:1.2;
+
+margin-bottom:14px;
+
+font-weight:bold;
+}
+
+.stage-card p{
+
+font-size:0.9rem;
+
+line-height:1.55;
+}
+
+.myth-title{
+
+text-align:center;
+
+color:var(--gold);
+
+font-size:1.35rem;
+
+margin-bottom:14px;
+}
+
+.myth-text{
+
+font-size:0.9rem;
+
+line-height:1.55;
+
+font-style:italic;
+}
+
+/* ===================================== */
+/* ИЗОБРАЖЕНИЕ */
+/* ===================================== */
+
+.stage-image-container{
+
+position:relative;
+
+overflow:hidden;
+
+min-height:0;
+
+border-radius:20px;
+
+background:
+rgba(255,255,255,.02);
+
+box-shadow:
+0 20px 40px rgba(0,0,0,.55);
+
+display:flex;
+
+justify-content:center;
+align-items:center;
+}
+
+.stage-image{
+
+position:absolute;
+
+opacity:0;
+
+transition:
+opacity .8s ease;
+
+max-width:100%;
+max-height:100%;
+
+object-fit:contain;
+}
+
+.stage-image.active{
+
+opacity:1;
+}
+
+/* ===================================== */
+/* КНОПКА */
+/* ===================================== */
+
+#stop-btn{
+
+position:fixed;
+
+right:20px;
+bottom:20px;
+
+display:none;
+
+padding:
+15px
+25px;
+
+border:none;
+
+border-radius:12px;
+
+font-size:1.1rem;
+
+font-weight:bold;
+
+background:#c84343;
+
+color:white;
+
+cursor:pointer;
+
+z-index:999;
+}
+
+/* ===================================== */
+/* ПЛАНШЕТ */
+/* ===================================== */
+
+@media(max-width:1100px){
+
+body{
+overflow:auto;
+}
+
+.app{
+height:auto;
+min-height:100vh;
+}
+
+.main-layout{
+
+grid-template-columns:
+1fr
+1fr;
+
+grid-template-areas:
+"image image"
+"left right";
+}
+
+.stage-image-container{
+
+grid-area:image;
+
+min-height:500px;
+}
+
+.left-column{
+grid-area:left;
+}
+
+.right-column{
+grid-area:right;
+}
+
+.stage-title,
+.myth-title{
+
+font-size:1.1rem;
+}
+
+.stage-card p,
+.myth-text{
+
+font-size:0.75rem;
+}
+}
+
+/* ===================================== */
+/* ТЕЛЕФОН */
+/* ===================================== */
+
+@media(max-width:700px){
+
+.main-layout{
+
+grid-template-columns:1fr;
+
+grid-template-areas:
+"image"
+"left"
+"right";
+}
+
+.left-column,
+.right-column{
+
+display:flex;
+flex-direction:column;
+}
+
+.stage-image-container{
+
+min-height:350px;
+}
+
+h1{
+
+font-size:1.8rem;
+}
+
+.subtitle{
+
+font-size:1rem;
+}
+
+.stage-title,
+.myth-title{
+
+font-size:1rem;
+}
+
+.stage-card p,
+.myth-text{
+
+font-size:0.75rem;
+}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<header>
+
+<h1>Азуритовая Дева</h1>
+
+<p class="subtitle">
+Нажмите на стадию или миф для озвучивания текста
+</p>
+
+</header>
+
+<button id="stop-btn">
+Остановить чтение
+</button>
+
+<div class="main-layout">
+
+<div class="left-column">
+
+<div class="stage-card" data-stage="1">
+
+<div class="stage-title">
+Стадия 1. Сон Азуритовой Девы
+</div>
+
+<p>
+Азурит хранит в своих синих прожилках древнюю тайну моря и неба.
+Образ ещё скрыт внутри камня и кажется лишь случайной игрой красок и теней.
+</p>
+
+</div>
+
+<div class="stage-card" data-stage="2">
+
+<div class="stage-title">
+Стадия 2. Первое пробуждение
+</div>
+
+<p>
+Из песочно-голубых узоров начинает проявляться силуэт лица.
+Лик возникает словно далёкое воспоминание, медленно возвращающееся из глубин минерала.
+</p>
+
+</div>
+
+</div>
+
+<div class="stage-image-container">
+
+<img src="stage1.jpg"
+class="stage-image"
+data-stage="1">
+
+<img src="stage2.jpg"
+class="stage-image"
+data-stage="2">
+
+<img src="stage3.jpg"
+class="stage-image active"
+data-stage="3">
+
+</div>
+
+<div class="right-column">
+
+<div class="stage-card active-card"
+data-stage="3">
+
+<div class="stage-title">
+Стадия 3. Явление Азуритовой Девы
+</div>
+
+<p>
+Скрытый образ раскрывается полностью и становится живой частью камня.
+Синие кристаллы превращаются в струящиеся волосы, а Азуритовая Дева появляется как древняя хранительница глубинной мудрости.
+</p>
+
+</div>
+
+<div class="myth-section">
+
+<div class="myth-title">
+Миф
+</div>
+
+<div class="myth-text">
+В те времена, когда небесные воды ещё текли между звёздами, богиня лазурного света спрятала частицу своей души внутри азурита. Она повелела камню хранить память о небесах и морях до наступления новой эпохи. Веками её лик дремал среди голубых кристаллов, постепенно проступая в узорах минерала. Сначала люди видели лишь смутную тень, затем различали лицо, а позже являлась сама Азуритовая Дева. Говорят, тот, кто увидит все три стадии её пробуждения, обретёт способность замечать скрытую красоту во всём сущем.
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+document.addEventListener("DOMContentLoaded",()=>{
+
+const cards =
+document.querySelectorAll(".stage-card");
+
+const images =
+document.querySelectorAll(".stage-image");
+
+const myth =
+document.querySelector(".myth-section");
+
+const stopBtn =
+document.getElementById("stop-btn");
+
+const synth =
+window.speechSynthesis;
+
+function speak(text){
+
+synth.cancel();
+
+const utter =
+new SpeechSynthesisUtterance(text);
+
+utter.lang="ru-RU";
+utter.rate=.95;
+utter.pitch=1.02;
+
+synth.speak(utter);
+
+stopBtn.style.display="block";
+
+utter.onend=()=>{
+stopBtn.style.display="none";
+};
+}
+
+stopBtn.addEventListener("click",()=>{
+
+synth.cancel();
+
+stopBtn.style.display="none";
+});
+
+cards.forEach(card=>{
+
+card.addEventListener("click",()=>{
+
+const stage =
+card.dataset.stage;
+
+cards.forEach(c=>{
+c.classList.remove("active-card");
+});
+
+card.classList.add("active-card");
+
+images.forEach(img=>{
+
+if(img.dataset.stage===stage){
+
+img.classList.add("active");
+
+}else{
+
+img.classList.remove("active");
+}
+});
+
+const title =
+card.querySelector(".stage-title").innerText;
+
+const text =
+card.querySelector("p").innerText;
+
+speak(title + ". " + text);
+});
+
+});
+
+myth.addEventListener("click",()=>{
+
+const title =
+myth.querySelector(".myth-title").innerText;
+
+const text =
+myth.querySelector(".myth-text").innerText;
+
+speak(title + ". " + text);
+
+});
+
+});
+
+</script>
+
+</body>
+</html>
